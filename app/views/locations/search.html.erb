@@ -1,0 +1,15 @@
+<%= render 'shared/content_title', title: 'Places found...' %>
+
+<% results = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/find?q=#{@results}&type=like&mode=xml&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root.xpath('list//item') %>
+
+<% results.each do |result| %>
+  <div class="list-group">
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading"><%= result.at_xpath('city')['name'] + ', ' + result.at_xpath('city//country').text %></h4>
+      <p class="list-group-item-text"><%= result.at_xpath('weather')['value'] %></p>
+    </a>
+    <% if logged_in? %>
+      <%= button_to 'Add', locations_path(name: result.at_xpath('city')['name'], country: result.at_xpath('city//country').text, city_id: result.at_xpath('city')['id']), method: 'post', class: 'btn btn-success' %>
+    <% end %>
+  </div>
+<% end %>

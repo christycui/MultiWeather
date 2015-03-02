@@ -1,0 +1,25 @@
+<% current = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/weather?id=#{@location.city_id}&mode=xml&units=metric&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root %>
+
+<%= render 'shared/content_title', title: @location.name + ', ' + @location.country %>
+
+<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#current" aria-controls="home" role="tab" data-toggle="tab">Current</a></li>
+    <li role="presentation"><a href="#forecast" aria-controls="profile" role="tab" data-toggle="tab">16-day</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="current">
+      <div class='row'>
+        <div>current.at_xpath('city//sun')['rise']</div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="forecast">
+      <%= render 'location', location: @location, n_of_days: 16 %>
+    </div>
+  </div>
+
+</div>
