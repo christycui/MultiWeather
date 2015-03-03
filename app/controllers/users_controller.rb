@@ -34,11 +34,11 @@ class UsersController < ApplicationController
   
   private
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by slug: params[:id]
   end
   
   def user_params
-    params.require(:user).permit(:username, :password, :email, :timezone)
+    params.require(:user).permit(:username, :password, :email, :timezone, :display_unit)
   end
   
   def require_same_user

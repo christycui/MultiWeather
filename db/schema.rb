@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150303024252) do
+ActiveRecord::Schema.define(version: 20150303034723) do
 
   create_table "locations", force: true do |t|
     t.integer "user_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150303024252) do
     t.string  "name"
     t.string  "country"
     t.string  "nickname"
+    t.string  "slug"
   end
 
   create_table "posts", force: true do |t|
@@ -36,6 +37,8 @@ ActiveRecord::Schema.define(version: 20150303024252) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "timezone"
+    t.string   "display_unit"
+    t.string   "slug"
   end
 
 end

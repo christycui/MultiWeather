@@ -20,6 +20,11 @@
       <br/>
       <%= f.time_zone_select :timezone, ActiveSupport::TimeZone.us_zones, default: Time.zone.name %>
     </div>
+    <div class='form-group'>
+      <%= f.label :display_unit %>
+      <br/>
+      <%= f.select :display_unit, [['&#8457;'.html_safe, 'imperial'], ['&#8451;'.html_safe, 'metric']] %>
+    </div>
     <br/>
     <%= f.submit @user.new_record? ? 'Sign Up': 'Update', class: 'btn btn-success' %>
   <% end %>

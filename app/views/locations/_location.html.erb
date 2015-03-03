@@ -1,5 +1,5 @@
 
-<% days = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/forecast/daily?id=#{location.city_id}&mode=xml&units=metric&cnt=#{n_of_days}&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root.xpath('forecast//time') %>
+<% days = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/forecast/daily?id=#{location.city_id}&mode=xml&units=#{current_user.display_unit}&cnt=#{n_of_days}&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root.xpath('forecast//time') %>
 
 
 <div class='row'>
@@ -22,8 +22,8 @@
       <div><small><%= day['day'] %></small></div>
       <img src="http://openweathermap.org/img/w/<%= day.at_xpath('symbol')['var'] %>.png">
       <div><%= day.at_xpath('symbol')['name'].split(' ').each {|word| word.capitalize!}.join(' ') %></div>
-      <div>Hi: <%= day.at_xpath('temperature')['max'].to_f.round(0) %> &#8451;</div>
-      <div>Low: <%= day.at_xpath('temperature')['min'].to_f.round(0) %> &#8451;</div>
+      <div>Hi: <%= day.at_xpath('temperature')['max'].to_f.round(0) %> <%= temperature_symbol.html_safe %></div>
+      <div>Low: <%= day.at_xpath('temperature')['min'].to_f.round(0) %> <%= temperature_symbol.html_safe %></div>
       <div>PP: <%= day.at_xpath('precipitation')['value'].nil? ? '0' : day.at_xpath('precipitation')['value'].to_f.round(0) %> mm</div>
     </div>
     <% end %>

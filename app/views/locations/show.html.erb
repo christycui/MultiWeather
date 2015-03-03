@@ -1,4 +1,4 @@
-<% current = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/weather?id=#{@location.city_id}&mode=xml&units=metric&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root %>
+<% current = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/weather?id=#{@location.city_id}&mode=xml&units=#{current_user.display_unit}&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root %>
 
 <% timezone = Timezone::Zone.new :latlon => [current.at_xpath('city//coord')['lat'], current.at_xpath('city//coord')['lon']] %>
 
@@ -12,17 +12,20 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#discussion" aria-controls="discussion" role="tab" data-toggle="tab">Discussion</a></li>
-    <li role="presentation"><a href="#current" aria-controls="current" role="tab" data-toggle="tab">Current</a></li>
+    <li role="presentation"><a href="#discussion" aria-controls="discussion" role="tab" data-toggle="tab">Discussion</a></li>
+    <li role="presentation" class="active"><a href="#current" aria-controls="current" role="tab" data-toggle="tab">Current</a></li>
     <li role="presentation"><a href="#forecast" aria-controls="forecast" role="tab" data-toggle="tab">15-day</a></li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active container" id="discussion">
+    <div role="tabpanel" class="tab-pane container" id="discussion">
       <%= render @location.posts %>
+      <% if @location.posts == [] %>
+        <em>No discussions yet.</em>
+      <% end %>
     </div>
-    <div role="tabpanel" class="tab-pane container" id="current">
+    <div role="tabpanel" class="tab-pane active container" id="current">
       <div class='row well'>
         <iframe width='500' height='350' src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCX9cu6tEVtmhFsRe89ebQI-SbG5qJsdYk&q=<%= current.at_xpath('city//coord')['lat'] %>,<%= current.at_xpath('city//coord')['lon'] %>" style='float: left;'></iframe>
         <div class='col-sm-3 text-center'>
@@ -30,7 +33,7 @@
           <div><%= current.at_xpath('weather')['value'].split(' ').each {|word| word.capitalize!}.join(' ') %></div>
           <br/>
           <br/>
-          <div><i class='wi wi-thermometer fa-2x'></i> Temperature: <%= current.at_xpath('temperature')['value'].to_f.round(0) %> &#8451;</div>
+          <div><i class='wi wi-thermometer fa-2x'></i> Temperature: <%= current.at_xpath('temperature')['value'].to_f.round(0) %> <%= temperature_symbol.html_safe %></div>
           <div><i class='wi wi-sprinkles fa-2x'></i> Humidity: <%= current.at_xpath('humidity')['value'].to_f.round(0) %> %</div>
           <div><i class='wi wi-strong-wind fa-2x'></i> Wind: <%= current.at_xpath('wind//speed')['name'] %></div>
           <br/>

@@ -24,4 +24,8 @@ module ApplicationHelper
     end
     dt.strftime("%m/%d/%Y %l:%M%P %Z")
   end
+  
+  def temperature_symbol
+    current_user.display_unit == 'metric' ? '&#8451;': '&#8457;'
+  end
 end

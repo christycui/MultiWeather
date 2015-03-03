@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
   
-  before_action :require_user, only: [:index, :search]
+  before_action :require_user, only: [:index, :search, :show]
   before_action :set_location, only: [:show, :update, :destroy]
   before_action :require_creator, only: [:update, :destroy]
 
@@ -15,10 +15,6 @@ class LocationsController < ApplicationController
   def create
     @location = Location.new(location_params)
     @location.user = current_user
-    if current_user.locations.select {|loc| loc.city_id == @location.city_id} != []
-      flash[:notice] = 'This location is already added.'
-      redirect_to :back
-    end
     if @location.save
       flash[:success] = 'New location is added to your watch list!'
       redirect_to dashboard_path
@@ -51,7 +47,7 @@ class LocationsController < ApplicationController
   
   private
   def set_location
-    @location = Location.find(params[:id])
+    @location = Location.find_by slug: params[:id]
   end
   
   def require_creator
