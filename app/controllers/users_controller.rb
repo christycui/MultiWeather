@@ -24,6 +24,12 @@ class UsersController < ApplicationController
   end
   
   def update
+    if @user.update(user_params)
+      flash[:success] = "Profile updated."
+      redirect_to dashboard_path
+    else
+      render 'edit'
+    end
   end
   
   private
@@ -32,7 +38,7 @@ class UsersController < ApplicationController
   end
   
   def user_params
-    params.require(:user).permit(:username, :password, :email)
+    params.require(:user).permit(:username, :password, :email, :timezone)
   end
   
   def require_same_user

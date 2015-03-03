@@ -21,7 +21,7 @@ class LocationsController < ApplicationController
     end
     if @location.save
       flash[:success] = 'New location is added to your watch list!'
-      redirect_to '/dashboard'
+      redirect_to dashboard_path
     else
       flash[:danger] = 'Your location could not be added.'
       render 'search'
@@ -37,7 +37,7 @@ class LocationsController < ApplicationController
   def update
     if @location.update(location_params)
       flash[:notice] = 'Nickname added.'
-      redirect_to root_path
+      redirect_to dashboard_path
     else
       render 'index'
     end
@@ -46,7 +46,7 @@ class LocationsController < ApplicationController
   def destroy
     @location.destroy
     flash[:success] = 'Location deleted.'.html_safe
-    redirect_to root_path
+    redirect_to dashboard_path
   end
   
   private

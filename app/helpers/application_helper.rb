@@ -17,4 +17,11 @@ module ApplicationHelper
       source.at_xpath('geoname//name').text + ', ' + (source.at_xpath('geoname//adminCode1').text.to_i == 0 ? source.at_xpath('geoname//adminCode1').text + ', ' : '') + source.at_xpath('geoname//countryCode').text
     end
   end
+  
+  def display_datetime(dt)
+    if logged_in? && !current_user.timezone.blank?
+      dt = dt.in_time_zone(current_user.timezone)
+    end
+    dt.strftime("%m/%d/%Y %l:%M%P %Z")
+  end
 end
