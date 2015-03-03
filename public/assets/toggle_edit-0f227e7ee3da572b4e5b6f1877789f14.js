@@ -1,0 +1,1 @@
+$(document).ready(function(){$("#edit").on("click",function(){$(".edit_group").toggle(),$(this).text(function(t,i){return"Edit Watchlist"===i?"Hide Edits":"Edit Watchlist"})})});
