@@ -33,4 +33,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:username, :password, :email)
   end
+  
+  def require_same_user
+    unless logged_in? && current_user == @user
+      flash[:danger] = "You don't have access to that."
+      redirect_to root_path
+    end
+  end
 end

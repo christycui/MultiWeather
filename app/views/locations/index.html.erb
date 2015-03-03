@@ -1,2 +1,6 @@
 <%= render 'shared/content_title', title: 'Dashboard' %>
+<div id='edit' class='col-sm-12 text-right'><button class='btn btn-primary'>Edit Nickname</button></div>
+<br/>
 <%= render current_user.locations, n_of_days: 5 %>
+
+<%= render 'shared/abbr' %>

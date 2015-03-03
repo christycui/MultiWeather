@@ -43,3 +43,5 @@ gem 'pry', '~> 0.10.1'
 # Use nokogiri to parse XML data
 gem 'nokogiri', '~> 1.6.6.2'
 
+# timezone gem to find local timezone according to geo-location
+gem 'timezone', '~> 0.3.8'

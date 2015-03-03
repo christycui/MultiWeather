@@ -4,19 +4,28 @@
 
 <div class='row'>
   <div class='col-xs-3 col-md-2 text-center'>
-    <h4 class='location'><%= link_to location.name + ', ' + location.country, location_path(location) %></h4>
+    <h4><%= location.nickname %></h4>
+    <h4><%= link_to name_lookup(location.city_id), location_path(location) %></h4>
+    <div class='edit_group' style='visibility: hidden'>
+      <%= button_to 'Delete', location_path(location), method: 'delete', class: 'btn btn-danger' %>
+      <br/>
+      <%= form_for location do |f| %>
+      <%= f.text_field :nickname, placeholder: 'e.g. ' + Location::NICKNAME_EX.shuffle.first, class: 'span1' %>
+      <%= f.submit (location.nickname.nil? ? 'Add nickname' : 'Edit nickname'), class: 'btn btn-success' %>
+      <% end %>
+    </div>
   </div>
-  <div class='col-xs-9 col-md-10'>
+  <div>
     <% days.each do |day| %>
-      <div class='col-xs-3 col-md-2 well text-center'>
-        <div><strong><%= name_of_day(day['day']) %></strong></div>
-        <div><small><%= day['day'] %></small></div>
-        <img src="http://openweathermap.org/img/w/<%= day.at_xpath('symbol')['var'] %>.png">
-        <div><%= day.at_xpath('symbol')['name'].split(' ').each {|word| word.capitalize!}.join(' ') %></div>
-        <div>Hi: <%= day.at_xpath('temperature')['max'].to_f.round(0) %> &#8451;</div>
-        <div>Low: <%= day.at_xpath('temperature')['min'].to_f.round(0) %> &#8451;</div>
-        <div>PP: <%= day.at_xpath('precipitation')['value'].nil? ? '0' : day.at_xpath('precipitation')['value'].to_f.round(0) %> mm</div>
-      </div>
+    <div class='col-xs-3 col-md-2 col-sm-3 well text-center'>
+      <div><strong><%= name_of_day(day['day']) %></strong></div>
+      <div><small><%= day['day'] %></small></div>
+      <img src="http://openweathermap.org/img/w/<%= day.at_xpath('symbol')['var'] %>.png">
+      <div><%= day.at_xpath('symbol')['name'].split(' ').each {|word| word.capitalize!}.join(' ') %></div>
+      <div>Hi: <%= day.at_xpath('temperature')['max'].to_f.round(0) %> &#8451;</div>
+      <div>Low: <%= day.at_xpath('temperature')['min'].to_f.round(0) %> &#8451;</div>
+      <div>PP: <%= day.at_xpath('precipitation')['value'].nil? ? '0' : day.at_xpath('precipitation')['value'].to_f.round(0) %> mm</div>
+    </div>
     <% end %>
   </div>
 </div>

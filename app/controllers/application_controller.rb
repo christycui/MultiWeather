@@ -13,13 +13,6 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
   
-  def require_same_user
-    unless logged_in? && current_user == @user
-      flash[:danger] = "You don't have access to that."
-      redirect_to root_path
-    end
-  end
-  
   def require_user
     access_denied unless logged_in?
   end

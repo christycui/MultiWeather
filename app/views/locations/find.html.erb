@@ -2,7 +2,7 @@
 
 <%= form_tag '/search' do %>
   <div class='form-group'>
-    <%= text_field_tag :name %>
+    <%= text_field_tag :name, nil, placeholder: 'Type in a city name' %>
   </div>
   <%= submit_tag 'Search', class: 'btn btn-success' %>
 <% end %>

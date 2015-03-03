@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post '/search', to: 'locations#search'
   get '/dashboard', to: 'locations#index'
   resources :users, only: [:show, :create, :edit, :update]
-  resources :locations, only: [:create, :show]
+  resources :locations, only: [:create, :show, :destroy, :update]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
