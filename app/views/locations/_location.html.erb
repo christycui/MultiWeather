@@ -6,12 +6,12 @@
   <div class='col-xs-3 col-md-2 text-center'>
     <h4><%= location.nickname %></h4>
     <h4><%= link_to name_lookup(location.city_id), location_path(location) %></h4>
-    <div id='edit_group' style='visibility: visible'>
+    <div class='edit_group' style='visibility: hidden'>
       <%= button_to 'Delete', location_path(location), method: 'delete', class: 'btn btn-danger' %>
       <br/>
       <%= form_for location do |f| %>
       <%= f.text_field :nickname, placeholder: 'e.g. ' + Location::NICKNAME_EX.shuffle.first, class: 'span1' %>
-      <%= f.submit (location.nickname.nil? ? 'Add nickname' : 'Edit nickname'), class: 'btn btn-success' %>
+      <%= f.submit (location.nickname.nil? ? 'Add nickname' : 'Update nickname'), class: 'btn btn-success' %>
       <% end %>
     </div>
   </div>
