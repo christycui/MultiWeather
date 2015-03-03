@@ -13,7 +13,7 @@ class PostsController < ApplicationController
     @post = Post.new(params.require(:post).permit(:body, :location_id))
     @post.user = current_user
     if @post.save
-      flash[:notice] = "Your post was added!"
+      flash[:success] = "Your post was added!"
       redirect_to root_path
     else
       render 'new'
