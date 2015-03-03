@@ -7,3 +7,8 @@
 <% @posts.each do |post| %>
 <%= render 'post', post: post %>
 <% end %>
+<footnote>
+  <div class='container' style='margin-top: 20px; margin-bottom: 20px;'>
+    <p>Weather and geo-location data from <%= link_to 'OpenWeatherMap', 'http://openweathermap.org/' %>, <%= link_to 'Google Map', 'https://maps.google.com' %> and <%= link_to 'GeoNames', "http://openweathermap.org/" %>. Cool weather-themed fonts by <%= link_to 'Weather Icons', 'http://erikflowers.github.io/weather-icons/' %>. </p>
+  </div>
+</footnote>
