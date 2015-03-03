@@ -1,6 +1,8 @@
 $(document).ready(function() {
-  console.log( "ready!" );
   $('#edit').click(function() {
-    $(".edit_group").css('visibility', 'visible');
+    $(".edit_group").toggle();
+    $(this).text(function(i, text){
+      return text === "Edit Watchlist" ? "Hide Edits" : "Edit Watchlist";
+    });
   });
 });

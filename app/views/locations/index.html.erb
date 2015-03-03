@@ -1,8 +1,17 @@
 
 <%= render 'shared/content_title', title: 'Dashboard' %>
-<div class='col-sm-12 text-right'><button id='edit' class='btn btn-primary'>Edit Nickname</button></div>
-<br/>
-<br/>
-<%= render current_user.locations, n_of_days: 5 %>
 
-<%= render 'shared/abbr' %>
+<% if logged_in? && current_user.locations != [] %>
+  <div class='col-sm-12 text-right'><button id='edit' class='btn btn-primary'>Edit Watchlist</button></div>
+  <br/>
+  <br/>
+  <%= render current_user.locations, n_of_days: 5 %>
+
+  <%= render 'shared/abbr' %>
+<% else %>
+  <div class='jumbotron'>
+    <h2>Your watchlist is currently empty.</h2>
+    <p>Start putting all of your favoraite places in the basket. Your house, your hometown, even your dream city! </p>
+    <p><%= link_to 'Add Location', search_path %></p>
+  </div>
+<% end %>

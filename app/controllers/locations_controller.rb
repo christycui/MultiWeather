@@ -32,7 +32,7 @@ class LocationsController < ApplicationController
   
   def update
     if @location.update(location_params)
-      flash[:notice] = 'Nickname added.'
+      flash[:success] = 'Nickname updated.'
       redirect_to dashboard_path
     else
       render 'index'

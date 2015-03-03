@@ -1,8 +1,15 @@
 
 <div class="jumbotron">
   <h1>MultiWeather</h1>
-  <p>Weather forecasts of all the places you care about, on one page.</p>
-  <p><a class="btn btn-primary btn-lg" href="/register" role="button">Join Us!</a></p>
+  <p>Tired of checking weather of where you live, work AND a million other places? MultiWeather gives you all you care about, on one page.</p>
+  <div style='vertical-align: middle; display: table-cell;'>
+    <% if !logged_in? %>
+      <p><a class="btn btn-primary btn-lg" href="/register" role="button">Try It!</a></p>
+      <p>or <%= link_to 'Log In', '/login' %></p>
+    <% else %>
+      <p><a class="btn btn-primary btn-lg" href="/dashboard" role="button">Go To Dashboard</a></p>
+    <% end %>
+  </div>
 </div>
 <% @posts.each do |post| %>
 <%= render 'post', post: post %>

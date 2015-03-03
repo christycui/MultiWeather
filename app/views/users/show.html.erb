@@ -6,6 +6,8 @@
     <dd><%= @user.username %></dd>
     <dt>Time-zone:</dt>
     <dd><%= @user.timezone %></dd>
+    <dt>Display Preference:</dt>
+    <dd><%= @user.display_unit == 'metric' ? '&#8451;'.html_safe : '&#8457;'.html_safe %></dd>
     <dd></dd>
   </dl>
 </div>
@@ -13,7 +15,7 @@
 <h4>Recent Activites: </h4>
 <%= render @user.posts %>
 <% if @user.posts == [] %>
-  <em><%= @user.username %> didn't leave anything.</em>
+  <em><%= @user.username %> hasn't posted anything yet.</em>
 <% end %>
 
 
