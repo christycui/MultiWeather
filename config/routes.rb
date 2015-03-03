@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'sessions#new'
+  root 'posts#index'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/register', to: 'users#new'
@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'locations#index'
   resources :users, only: [:show, :create, :edit, :update]
   resources :locations, only: [:create, :show, :destroy, :update]
+  resources :posts, only: [:index, :new, :create]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -15,8 +15,9 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <% if logged_in? %>
-        <li class="active"><a href="/dashboard">Dashboard<span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="/dashboard">Dashboard<span class="sr-only">(current)</span></a></li>
           <li><a href="/search">Add Location <span class="sr-only">(current)</span></a></li>
+          <li><%= link_to 'Pitch In', new_post_path %></li>
         <% end %>
           </ul>
         </li>

@@ -6,10 +6,15 @@
     <dd><%= @user.username %></dd>
     <dt>Email:</dt>
     <dd><%= @user.email %></dd>
-    <dt>Primary Location:</dt>
     <dd></dd>
   </dl>
 </div>
+<br/>
+<h4>Recent Activites: </h4>
+<%= render @user.posts %>
+<% if @user.posts == [] %>
+  <em><%= @user.username %> didn't leave anything.</em>
+<% end %>
 
 
 

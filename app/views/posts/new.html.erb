@@ -1,0 +1,13 @@
+<%= render 'shared/error_msg', obj: @post %>
+<%= render 'shared/content_title', title: "How's the weather?" %>
+<%= form_for @post do |f| %>
+  <div class='form-group'>
+    <%= f.label :body, 'Leave a comment: ' %>
+    <br/>
+    <%= f.text_area :body, rows: 10%>
+  </div>
+   <%= collection_select(:post, :location_id, current_user.locations.all, :id, :name, prompt: 'Select A Location') %>
+  <br/>
+  <br/>
+<%= f.submit 'Add to discussion', class: 'btn btn-success' %>
+<% end %>

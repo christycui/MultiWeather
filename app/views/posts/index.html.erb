@@ -1,0 +1,9 @@
+
+<div class="jumbotron">
+  <h1>MultiWeather</h1>
+  <p>Weather forecasts of all the places you care about, on one page.</p>
+  <p><a class="btn btn-primary btn-lg" href="/register" role="button">Join Us!</a></p>
+</div>
+<% @posts.each do |post| %>
+<%= render 'post', post: post %>
+<% end %>

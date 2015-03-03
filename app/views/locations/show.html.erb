@@ -12,34 +12,31 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#map" aria-controls="map" role="tab" data-toggle="tab">Map</a></li>
+    <li role="presentation" class="active"><a href="#discussion" aria-controls="discussion" role="tab" data-toggle="tab">Discussion</a></li>
     <li role="presentation"><a href="#current" aria-controls="current" role="tab" data-toggle="tab">Current</a></li>
     <li role="presentation"><a href="#forecast" aria-controls="forecast" role="tab" data-toggle="tab">15-day</a></li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="map">
+    <div role="tabpanel" class="tab-pane active container" id="discussion">
+      <%= render @location.posts %>
+    </div>
+    <div role="tabpanel" class="tab-pane container" id="current">
       <div class='row well'>
         <iframe width='500' height='350' src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCX9cu6tEVtmhFsRe89ebQI-SbG5qJsdYk&q=<%= current.at_xpath('city//coord')['lat'] %>,<%= current.at_xpath('city//coord')['lon'] %>" style='float: left;'></iframe>
-        <div class='text-center'>
+        <div class='col-sm-3 text-center'>
+          <img src="http://openweathermap.org/img/w/<%= current.at_xpath('weather')['icon'] %>.png">
+          <div><%= current.at_xpath('weather')['value'].split(' ').each {|word| word.capitalize!}.join(' ') %></div>
+          <br/>
+          <br/>
+          <div><i class='wi wi-thermometer fa-2x'></i> Temperature: <%= current.at_xpath('temperature')['value'].to_f.round(0) %> &#8451;</div>
+          <div><i class='wi wi-sprinkles fa-2x'></i> Humidity: <%= current.at_xpath('humidity')['value'].to_f.round(0) %> %</div>
+          <div><i class='wi wi-strong-wind fa-2x'></i> Wind: <%= current.at_xpath('wind//speed')['name'] %></div>
           <br/>
           <br/>
           <div><i class='wi wi-sunrise fa-2x'></i> Sunrise: <%= DateTime.civil(rise[0..3].to_i,rise[5..6].to_i,rise[8..9].to_i,rise[11..12].to_i,rise[14..15].to_i,rise[17..18].to_i).utc.in_time_zone(timezone.zone).to_s[11..15] %> am</div>
           <div><i class='wi wi-sunset fa-2x'></i> Sunset: <%= DateTime.civil(set[0..3].to_i,set[5..6].to_i,set[8..9].to_i,set[11..12].to_i,set[14..15].to_i,set[17..18].to_i).utc.in_time_zone(timezone.zone).to_s[11..15] %> pm</div>
-        </div>
-      </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="current">
-      <div class='well row'>
-        <div class='col-sm-3'>
-          <img src="http://openweathermap.org/img/w/<%= current.at_xpath('weather')['icon'] %>.png">
-          <div><%= current.at_xpath('weather')['value'].split(' ').each {|word| word.capitalize!}.join(' ') %></div>
-        </div>
-        <div class='col-sm-9'>
-          <div><i class='wi wi-thermometer fa-2x'></i> Temperature: <%= current.at_xpath('temperature')['value'].to_f.round(0) %> &#8451;</div>
-          <div><i class='wi wi-sprinkles fa-2x'></i> Humidity: <%= current.at_xpath('humidity')['value'].to_f.round(0) %> %</div>
-          <div><i class='wi wi-strong-wind fa-2x'></i> Wind: <%= current.at_xpath('wind//speed')['name'] %></div>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :locations
+  has_many :posts
   has_secure_password
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, on: :create, length: {minimum: 6}
