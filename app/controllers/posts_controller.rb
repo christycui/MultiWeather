@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   
   def new
     @post = Post.new
-    flash.now[:danger] = "Whoops! Looks like you don't have a location reference for the post. Add a location from the top." if current_user.posts == []
+    flash.now[:danger] = "Whoops! Looks like you don't have a location reference for the post. Add a location from the top." if current_user.locations == []
   end
   
   def create
