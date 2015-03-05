@@ -1,5 +1,5 @@
 <%= render 'shared/content_title', title: 'Places found...' %>
-<% results = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/find?q=#{URI.encode(@results)}&type=accurate&mode=xml&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root.xpath('list//item') rescue 'whoops' %>
+<% results = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/find?q=#{URI.encode(@results)}&type=like&mode=xml&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root.xpath('list//item') rescue 'whoops' %>
 
 <% if results.empty? || results == 'whoops' || results.at_xpath('city')['id'] == '0' %>
   <div class="alert alert-warning alert-dismissible" role="alert">
