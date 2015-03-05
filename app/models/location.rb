@@ -8,4 +8,8 @@ class Location < ActiveRecord::Base
   sluggable_column :name
   
   NICKNAME_EX = ["Mom's house", 'Home', 'Work', 'Hometown', 'Vacation place']
+
+  def generate_example
+    Location::NICKNAME_EX.shuffle.first
+  end
 end

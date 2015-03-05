@@ -1,28 +1,35 @@
 <%= render 'shared/content_title', title: 'Places found...' %>
-<% results = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/find?q=#{@results}&type=accurate&mode=xml&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root.xpath('list//item') %>
+<% results = Nokogiri::XML(open("http://api.openweathermap.org/data/2.5/find?q=#{URI.encode(@results)}&type=accurate&mode=xml&APIID=45070d99d2678d5c1efcd1e13e7301d2")).root.xpath('list//item') rescue 'whoops' %>
 
-<% results.each do |result| %>
-  <% city_id = result.at_xpath('city')['id'] %>
-  <div class="list-group">
-    <div class="list-group-item row">
-      <div style='float: left;'>
-        <h4 class="list-group-item-heading"><%= name_lookup(city_id) %></h4>
-        <p class="list-group-item-text"><%= result.at_xpath('weather')['value'] %></p>
-      </div>
-      <div style='float: right;' class='col-sm-3'>
-        <% if current_user.locations.select {|loc| loc.city_id == city_id.to_i} == [] %>
-        <%= form_for @location do |f| %>
-        <%= f.label :nickname %>
-        <%= f.text_field :nickname, placeholder: 'e.g. ' + Location::NICKNAME_EX.shuffle.first %>
-        <%= f.hidden_field :name, value: result.at_xpath('city')['name'] %>
-        <%= f.hidden_field :country, value: result.at_xpath('city//country').text %>
-        <%= f.hidden_field :city_id, value: result.at_xpath('city')['id'] %>
-          <%= f.submit 'Add', class: 'btn btn-success' %>
+<% if results.empty? || results == 'whoops' || results.at_xpath('city')['id'] == '0' %>
+  <div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    Matching city couldn't be found. Please try another search.
+  </div>
+<% else %>
+  <% results.each do |result| %>
+    <% city_id = result.at_xpath('city')['id'] %>
+    <div class="list-group">
+      <div class="list-group-item row">
+        <div style='float: left;'>
+          <h4 class="list-group-item-heading"><%= name_lookup(city_id) %></h4>
+          <p class="list-group-item-text"><%= result.at_xpath('weather')['value'] %></p>
+        </div>
+        <div style='float: right;' class='col-sm-3'>
+          <% if current_user.locations.select {|loc| loc.city_id == city_id.to_i} == [] %>
+          <%= form_for @location do |f| %>
+          <%= f.label :nickname %>
+          <%= f.text_field :nickname, placeholder: 'e.g. ' + @location.generate_example %>
+          <%= f.hidden_field :name, value: result.at_xpath('city')['name'] %>
+          <%= f.hidden_field :country, value: result.at_xpath('city//country').text %>
+          <%= f.hidden_field :city_id, value: result.at_xpath('city')['id'] %>
+            <%= f.submit 'Add', class: 'btn btn-success' %>
+          <% end %>
+          <% else %>
+          <button type="button" disabled class='btn btn-warning'>Added</button>
         <% end %>
-        <% else %>
-        <button type="button" disabled class='btn btn-warning'>Added</button>
-      <% end %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

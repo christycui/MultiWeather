@@ -30,4 +30,5 @@ group :production do
 end
 
 gem 'pg', '~> 0.18.1'
+gem 'pry'
 

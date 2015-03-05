@@ -10,7 +10,7 @@
       <%= button_to 'Delete', location_path(location), method: 'delete', class: 'btn btn-danger' %>
       <br/>
       <%= form_for location do |f| %>
-      <%= f.text_field :nickname, placeholder: 'e.g. ' + Location::NICKNAME_EX.shuffle.first, class: 'span1' %>
+      <%= f.text_field :nickname, placeholder: 'e.g. ' + location.generate_example, class: 'span1' %>
       <%= f.submit (location.nickname.nil? ? 'Add nickname' : 'Update nickname'), class: 'btn btn-success' %>
       <% end %>
     </div>
